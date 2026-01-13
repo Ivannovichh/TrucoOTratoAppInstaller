@@ -47,7 +47,7 @@ Se generó un script `.iss` para compilar el instalador final.
 * Creación de claves de Registro.
 * Despliegue de la estructura de carpetas correcta.
 
-![Inno Setup Script]()
+![Inno Setup Script](Images/InnoSetup.png)
 *(Sustituye esta imagen por tu captura del script de Inno Setup)*
 
 ---
