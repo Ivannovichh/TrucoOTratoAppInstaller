@@ -31,8 +31,7 @@ Se utilizó el plugin `maven-shade-plugin` para empaquetar el código y todas su
 
 > **Comando:** `mvn clean package`
 
-![Build Maven](https://via.placeholder.com/800x300?text=Captura+Maven+Build)
-*(Sustituye esta imagen por tu captura de la terminal o carpeta target)*
+![Build Maven](images/code.png)
 
 ### 2. Wrapper Nativo (Launch4j) 🍬
 Se configuró un ejecutable de Windows para envolver el JAR.
