@@ -38,7 +38,7 @@ Se configuró un ejecutable de Windows para envolver el JAR.
 * **Configuración:** Modo GUI (sin consola).
 * **Dependencias:** Se vinculó un JRE portable local usando rutas relativas.
 
-![Launch4j Config](https://via.placeholder.com/800x300?text=Captura+Launch4j)
+![Launch4j Config](Images/launch4j.png)
 *(Sustituye esta imagen por tu captura de configuración de Launch4j)*
 
 ### 3. Distribución (Inno Setup) 💿
