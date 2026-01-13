@@ -38,8 +38,8 @@ Se configuró un ejecutable de Windows para envolver el JAR.
 * **Configuración:** Modo GUI (sin consola).
 * **Dependencias:** Se vinculó un JRE portable local usando rutas relativas.
 
-![Launch4j Config](Images/launch4j.png)
-*(Sustituye esta imagen por tu captura de configuración de Launch4j)*
+![Launch4j](Images/launch4j.png)
+![Launch4j Config](Images/Datos.png)
 
 ### 3. Distribución (Inno Setup) 💿
 Se generó un script `.iss` para compilar el instalador final.
@@ -47,7 +47,7 @@ Se generó un script `.iss` para compilar el instalador final.
 * Creación de claves de Registro.
 * Despliegue de la estructura de carpetas correcta.
 
-![Inno Setup Script](https://via.placeholder.com/800x300?text=Captura+Inno+Setup)
+![Inno Setup Script]()
 *(Sustituye esta imagen por tu captura del script de Inno Setup)*
 
 ---
