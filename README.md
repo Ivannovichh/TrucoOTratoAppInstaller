@@ -9,7 +9,7 @@
 
 **Túnel del Terror** es una aplicación de escritorio desarrollada en **JavaFX**. Este repositorio documenta la implementación de un **ciclo completo de distribución de software** (Release Engineering).
 
-El objetivo principal ha sido transformar un proyecto de código fuente Java en un **producto final profesional para Windows**, generando un instalador (`setup.exe`) que gestiona dependencias, accesos directos y licencias, permitiendo su ejecución en equipos que no tienen Java instalado.
+El objetivo principal ha sido transformar un proyecto de código fuente Java en un **producto final profesional para Windows**, generando un instalador (`setup.exe`) que gestiona dependencias, accesos directos y licencias, optimizado para una distribución ligera.
 
 ---
 
@@ -19,7 +19,7 @@ El objetivo principal ha sido transformar un proyecto de código fuente Java en 
 | :--- | :--- |
 | **JavaFX & JDK 21** | Desarrollo de la interfaz gráfica y lógica del juego. |
 | **Apache Maven** | Gestión de dependencias y compilación del artefacto (Fat JAR). |
-| **Launch4j** | Empaquetado del JAR en un contenedor nativo `.exe`. |
+| **Launch4j** | Wrapper nativo (`.exe`). Configurado para validar la presencia de **Java 21** y redirigir a la descarga oficial si no se encuentra. |
 | **Inno Setup** | Creación del asistente de instalación y despliegue de archivos. |
 
 ---
@@ -36,7 +36,7 @@ Se utilizó el plugin `maven-shade-plugin` para empaquetar el código y todas su
 ### 2. Wrapper Nativo (Launch4j) 🍬
 Se configuró un ejecutable de Windows para envolver el JAR.
 * **Configuración:** Modo GUI (sin consola).
-* **Dependencias:** Se vinculó un JRE portable local usando rutas relativas.
+* **Dependencias:** Validación de versión mínima (21.0.0) y redirección web automática en caso de error.
 
 ![Launch4j](Images/launch4j.png)
 ![Launch4j Config](Images/Datos.png)
@@ -45,10 +45,9 @@ Se configuró un ejecutable de Windows para envolver el JAR.
 Se generó un script `.iss` para compilar el instalador final.
 * Inclusión de Licencia (EULA).
 * Creación de claves de Registro.
-* Despliegue de la estructura de carpetas correcta.
+* Compilación optimizada sin archivos innecesarios.
 
 ![Inno Setup Script](Images/InnoSetup.png)
-*(Sustituye esta imagen por tu captura del script de Inno Setup)*
 
 ---
 
@@ -56,24 +55,21 @@ Se generó un script `.iss` para compilar el instalador final.
 
 Durante el proceso de empaquetado y distribución surgieron varios retos técnicos que fueron resueltos de la siguiente manera:
 
-### 1. Portabilidad del JRE (Java Runtime Environment)
-* **Problema:** El ejecutable `.exe` fallaba en ordenadores que no tenían Java instalado.
-* **Solución:** Se incluyó una carpeta `jre` completa dentro del paquete. En Launch4j, se configuró la ruta dinámica `%EXEDIR%\jre`. Esto asegura que el juego use siempre su propia versión de Java, independientemente del sistema anfitrión.
-
-### 2. Rutas Absolutas vs. Relativas en el Instalador
+### 1. Rutas Absolutas vs. Relativas
 * **Problema:** Al mover la carpeta del proyecto a una nueva ubicación, el script de Inno Setup dejó de encontrar los archivos fuente.
 * **Solución:** Se refactorizó el script `.iss` actualizando las directivas `Source` y `OutputDir` para apuntar a la nueva estructura de directorios relativa.
 
-### 3. Error en la Estructura de Directorios (DestDir)
-* **Problema Crítico:** El instalador volcaba el contenido del JRE (`bin`, `lib`, etc.) directamente en la raíz de la carpeta de instalación, mezclándolo con el ejecutable. Esto hacía que Launch4j no encontrara la ruta `\jre\bin\java.exe`.
-* **Solución:** Se corrigió la directiva de destino en el script `.iss`.
-    * *Incorrecto:* `DestDir: "{app}"`
-    * *Correcto:* `DestDir: "{app}\jre"`
-    * Esto forzó al instalador a crear la subcarpeta necesaria para que el ejecutable funcionara correctamente.
+### 2. Error en la Estructura de Directorios (DestDir)
+* **Problema Crítico:** En versiones previas, el instalador mezclaba archivos en la raíz, rompiendo la estructura esperada.
+* **Solución:** Se corrigieron las directivas `DestDir` en el script `.iss` para asegurar la jerarquía correcta.
 
-### 4. Recursos y Licencias
-* **Problema:** El instalador por defecto era genérico y no incluía términos legales.
-* **Solución:** Se añadieron explícitamente las directivas `LicenseFile` y `SetupIconFile` en el script, vinculando los archivos `.txt` e `.ico` personalizados.
+### 3. Recursos y Licencias
+* **Problema:** El instalador por defecto era genérico.
+* **Solución:** Se añadieron explícitamente las directivas `LicenseFile` y `SetupIconFile` en el script, vinculando los recursos personalizados.
+
+### 4. Optimización del Distribuidor (Peso del Instalador)
+* **Problema:** Inicialmente se incluyó un JRE portable completo, lo que aumentaba el tamaño del instalador a más de 180MB, dificultando su distribución en repositorios como GitHub.
+* **Solución:** Se reconfiguró Launch4j para utilizar el Java del sistema o guiar al usuario a la descarga oficial de Oracle si no se detecta la versión 21. Esto redujo el peso final del instalador a **20MB**, simulando un entorno de producción optimizado para bajo ancho de banda.
 
 ---
 
@@ -84,17 +80,20 @@ Túnel-Del-Terror/
 ├── 📂 src/                        # Código Fuente
 ├── 📂 TrucoOTratoAppInstaller/    # Archivos de Distribución
 │   ├── 📂 output/                 # Carpeta donde se genera el setup.exe
-│   ├── 📂 jre/                    # Entorno Java portable
+│   ├── 📂 Images/                 # Capturas para documentación
 │   ├── 📄 Trucaso.exe             # Ejecutable intermedio
 │   ├── 📄 script_instalador.iss   # Script de Inno Setup
+│   └── 📄 licencia.txt            # Términos de uso
 ├── 📄 pom.xml                     # Configuración Maven
 └── 📄 README.md                   # Documentación
 ```
 ## 💿 Instrucciones de Instalación
 
-1.  Descarga el archivo **`InstaladorTunelTerror.exe`** desde la carpeta `output` o la sección de Releases.
-2.  Ejecuta el instalador y acepta los términos de licencia.
-3.  Busca el acceso directo **"Túnel del Terror"** en tu escritorio y ejecútalo.
+1.  Descarga el archivo **`InstaladorTunelTerror.exe`** desde la sección de **Releases** (a la derecha en GitHub).
+2.  Ejecuta el instalador.
+    * **Nota:** El juego requiere **Java 21**. Si no lo tienes instalado, se abrirá automáticamente la página de descarga oficial al intentar abrir el juego.
+3.  Acepta los términos de licencia y completa la instalación.
+4.  Busca el acceso directo **"Túnel del Terror"** en tu escritorio y ejecútalo.
 
 > **Desinstalación:** El juego se puede eliminar limpiamente desde el *Panel de Control > Programas y Características*.
 
