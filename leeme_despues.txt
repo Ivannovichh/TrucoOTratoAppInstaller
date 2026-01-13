@@ -1,0 +1,12 @@
+INSTALACIÓN COMPLETADA EXITOSAMENTE
+
+Gracias por instalar Túnel del Terror.
+
+Instrucciones de inicio:
+1. Puede ejecutar la aplicación haciendo doble clic en el icono creado en su Escritorio.
+2. También encontrará el acceso directo en el Menú Inicio > Programas.
+
+Soporte:
+Si encuentra algún error o problema durante la ejecución, por favor contacte con el desarrollador o consulte el archivo de registro.
+
+¡Esperamos que disfrute de la aplicación!

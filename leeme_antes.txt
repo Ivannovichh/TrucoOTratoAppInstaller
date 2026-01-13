@@ -1,0 +1,10 @@
+REQUISITOS DEL SISTEMA E INFORMACIÓN PREVIA
+
+Bienvenido al asistente de instalación de Túnel del Terror v1.0.
+
+Antes de continuar con la instalación, tenga en cuenta lo siguiente:
+- Este software incluye su propio entorno de ejecución Java (JRE 21), por lo que no es necesario tener Java instalado previamente en el equipo.
+- Se recomienda cerrar otras aplicaciones activas antes de continuar.
+- El espacio requerido en disco es de aproximadamente 180 MB.
+
+Si tiene una versión anterior instalada, el asistente la actualizará automáticamente.
