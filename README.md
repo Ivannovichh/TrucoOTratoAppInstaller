@@ -88,7 +88,6 @@ Túnel-Del-Terror/
 │   ├── 📂 jre/                    # Entorno Java portable
 │   ├── 📄 Trucaso.exe             # Ejecutable intermedio
 │   ├── 📄 script_instalador.iss   # Script de Inno Setup
-│   └── 📄 licencia.txt            # Términos de uso
 ├── 📄 pom.xml                     # Configuración Maven
 └── 📄 README.md                   # Documentación
 ```
